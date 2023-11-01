@@ -71,14 +71,36 @@ WHERE phone_number LIKE '515%';
 
 # 12. Escreva uma query que só exiba as informações dos funcionários cujo o primeiro nome tenha oito ou mais caracteres.
 
+SELECT * FROM hr.employees
+WHERE char_length(first_name) >= 8;
+
 # 13. Escreva uma query que exiba as seguintes informações de cada funcionário: id, primeiro nome e ano no qual foi contratado (exiba somente o ano).
+
+SELECT employee_id, first_name, YEAR(hire_date)
+FROM hr.employees;
 
 # 14. 🚀 Escreva uma query que exiba as seguintes informações de cada funcionário: id, primeiro nome e dia do mês no qual foi contratado (exiba somente o dia).
 
+SELECT employee_id, first_name, dayofmonth(hire_date) 
+FROM hr.employees;
+
 # 15. Escreva uma query que exiba as seguintes informações de cada funcionário: id, primeiro nome e mês no qual foi contratado (exiba somente o mês).
+
+SELECT employee_id, first_name, month(hire_date) 
+FROM hr.employees;
 
 # 16. Escreva uma query que exiba os nomes dos funcionários em letra maiúscula.
 
+SELECT UCASE(CONCAT(first_name,' ', last_name)) AS full_name
+FROM hr.employees;
+
 # 17: Escreva uma query que exiba o sobrenome e a data de contratação de todos os funcionário contratados em julho de 1987.
 
+SELECT last_name, hire_date
+FROM hr.employees
+WHERE MONTH(hire_date)=07 AND YEAR(hire_date)=1987;
+
 # 18: 🚀 Escreva uma query que exiba as seguintes informações de cada funcionário: nome, sobrenome, tempo que trabalha na empresa (em dias).
+
+SELECT first_name, last_name, DATEDIFF(CURRENT_DATE(), hire_date) 'days_on_work'
+FROM hr.employees;
