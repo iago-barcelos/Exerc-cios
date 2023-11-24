@@ -10,3 +10,21 @@ Anotações do conteúdo de middlewares:
   - Na construção da função middleware lembrar de: 1 - se a validação não passar, já para a requisição por ali (status da família 400); 2 - O melhor jeito por enquanto é fazer assim: if (deu certo) { next(); } else { res.sendStatus(400) }
 
 - Para usar o middleware devidamente na rota, ele deve ser passado no parametro nessa ordem: app.get('/suaRota', seuMiddleware, (req, res) => {}). Ele não vai funcionar se for chamado no corpo da função da rota.
+
+- Para receber o corpo de uma requisição que foi enviado em formato json, primeiramente deve habilitar isso através do middleware app.use(express.json()).
+  - Isso serve para ler por exemplo o req.body.
+
+- O middleware de erro serve para otimizar o tratamento de erros na aplicação, substituindo o uso de try-catch repetitivo.
+  - os parametros recebido por ele são, na ordem: 
+    const errorMiddleware = (error, req, res, next) => {
+      console.error(error.message)
+      return res.status(500).json({ message: 'Erro interno, teve novamente' })
+    }
+  - O corpo da função é apenas um exemplo, porém os parâmetros são obrigatórios para que o express entenda que se trata de um middleware de erro.
+
+- Por padrão o middleware de erro não lida com operações assíncronas. Para isso é utilizado a biblioteca express-async-errors.
+  - Para utilizar essa lib basta apenas usar require('express-async-errors') logo depois do require do express: 
+    const express = require('express');
+    require('express-async-errors')
+  .
+.
